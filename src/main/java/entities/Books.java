@@ -6,7 +6,9 @@ public class Books extends LibraryItems{
 
     Logger logger = Logger.getLogger(Books.class.getName());
     private String author;
-    private final int renewLimit = 3;
+
+    // renewLimit is const, so will not change
+    private static final int renewLimit = 3;
 
     public Books(String barcode, String author, String title, String year, String isbn){
         super(barcode, title, year, isbn);
@@ -21,7 +23,7 @@ public class Books extends LibraryItems{
     @Override
     public void loanItem(String userID, String barcode) {
         super.loanItem(userID, barcode);
-        super.setLoanPeroid(14);
+        super.setLoanPeroid(30);
     }
 
     @Override

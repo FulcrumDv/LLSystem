@@ -1,5 +1,5 @@
 package entities;
-
+import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
 /**
@@ -65,6 +65,10 @@ public class Loans {
         this.dueDate = dueDate;
     }
 
+    // getter for how many days are left on the loan
+    public long getDaysLeft(){
+        return ChronoUnit.DAYS.between(LocalDate.now(), this.dueDate);
+    }
 
 
 }

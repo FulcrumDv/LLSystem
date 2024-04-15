@@ -4,7 +4,8 @@ import java.util.logging.Logger;
 public class Multimedia extends LibraryItems {
     Logger logger = Logger.getLogger(Multimedia.class.getName());
     private String artist;
-    private final int renewLimit = 3;
+    // renewLimit is const, so will not change
+    private static final int renewLimit = 3;
     public Multimedia(String barcode, String artist, String title, String year, String isbn) {
         super(barcode, title, year, isbn);
         this.artist = artist;

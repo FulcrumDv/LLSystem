@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 import java.time.LocalDate;
 
@@ -16,14 +15,13 @@ public class Library {
     // Logging object for error handling
     Logger logger = Logger.getLogger(Library.class.getName());
 
-    // may change to hashmap
-    private List<Users> users;
-    private List<Loans> loans;
-    private List<LibraryItems> items;
-
+    // may change some from ArrayList to hashmap
+    private final List<Users> users;
+    private final List<Loans> loans;
+    private final List<LibraryItems> items;
     // This is my way of keeping a history when a loan is returned
-    private List<Loans> returnedLoans;
-    private List<Loans> allLoansOfUser;
+    private final List<Loans> returnedLoans;
+    private final List<Loans> allLoansOfUser;
 
     public Library(){
         this.users = new ArrayList<>();
@@ -31,6 +29,27 @@ public class Library {
         this.returnedLoans = new ArrayList<>();
         this.items= new ArrayList<>();
         this.allLoansOfUser = new ArrayList<>();
+    }
+
+    // Getters
+    public List<Users> getUsers(){
+        return users;
+    }
+
+    public List<Loans> getLoans(){
+        return loans;
+    }
+
+    public List<LibraryItems> getItems(){
+        return items;
+    }
+
+    public List<Loans> getReturnedLoans(){
+        return returnedLoans;
+    }
+
+    public List<Loans> getAllLoansOfUser(){
+        return allLoansOfUser;
     }
 
 
@@ -117,7 +136,7 @@ public class Library {
                 }
             }
 
-            // Dispalying the current Loans
+            // Displaying the current Loans
             for (Loans loan : loans){
                 System.out.println("Barcode: " + loan.getBarcode() +
                         "Title: " + loan.getTitle() +

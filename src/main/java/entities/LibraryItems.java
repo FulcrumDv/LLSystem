@@ -18,7 +18,7 @@ public abstract class LibraryItems implements LendableItem {
         this.isbn = ISBN;
         // items are lendable by default
         this.isLendable = true;
-        // default loan period is 0 as objects will type of object will determine their own loan period
+        // default loan period is 0 as object types (book/multimedia) will determine their own loan period
         this.loanPeriod = 0;
     }
 

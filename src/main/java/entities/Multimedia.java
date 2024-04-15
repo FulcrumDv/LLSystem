@@ -20,7 +20,7 @@ public class Multimedia extends LibraryItems {
     @Override
     public void loanItem(String userID, String barcode) {
         super.loanItem(userID, barcode);
-        super.setLoanPeroid(7);
+        super.setLoanPeriod(7);
     }
 
     @Override

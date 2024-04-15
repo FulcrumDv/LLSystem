@@ -1,8 +1,8 @@
 package entities;
 
 /* This is an abstract class that provides the basic structure for all library items
-    * implements lendable item interface
-    * gives default implementation for the returnItem and isLendable methods
+ * implements lendable item interface
+ * gives default implementation for the returnItem and isLendable methods
  */
 public abstract class LibraryItems implements LendableItem {
     private String barcode;
@@ -45,7 +45,7 @@ public abstract class LibraryItems implements LendableItem {
 
     // Setters
 
-    public void setLoanPeroid(int loanPeriod){
+    public void setLoanPeriod(int loanPeriod){
         this.loanPeriod = loanPeriod;
     }
 
@@ -64,12 +64,12 @@ public abstract class LibraryItems implements LendableItem {
         this.isLendable = false;
     }
 
-   // default display of all lendable items
+    // default display of all lendable items
     public String getLendables(){
         return "Barcode: " + this.barcode +
-        "Title: " + this.title +
-        "Year: " + this.year +
-        "ISBN: " + this.isbn;
+                "Title: " + this.title +
+                "Year: " + this.year +
+                "ISBN: " + this.isbn;
     }
 
 }

@@ -23,7 +23,7 @@ public class Books extends LibraryItems{
     @Override
     public void loanItem(String userID, String barcode) {
         super.loanItem(userID, barcode);
-        super.setLoanPeroid(30);
+        super.setLoanPeriod(30);
     }
 
     @Override

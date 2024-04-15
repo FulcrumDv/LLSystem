@@ -76,6 +76,16 @@ public class Library {
 
     }
 
+    // Check if user exists (needed for loaning)
+   public boolean checkUserExists(String userID){
+        for (Users user : users){
+            if (!user.getUserID().equals(userID)){
+
+            }
+        }
+   }
+
+
     // Loan out an item by supplying userId and barcode
     public void loanItem(String barcode, String userID){
         try{

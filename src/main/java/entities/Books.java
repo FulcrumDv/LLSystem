@@ -5,10 +5,11 @@ import java.util.logging.Logger;
 public class Books extends LibraryItems{
 
     Logger logger = Logger.getLogger(Books.class.getName());
-    private String author;
 
+    private String author;
     // renewLimit is const, so will not change
     private static final int renewLimit = 3;
+    private final int loanPeriod = 30;
 
     public Books(String barcode, String author, String title, String year, String isbn){
         super(barcode, title, year, isbn);
@@ -20,10 +21,18 @@ public class Books extends LibraryItems{
         return this.author;
     }
 
+    public int getRenewLimit(){
+        return renewLimit;
+    }
+
+    public int getLoanPeriod(){
+        return loanPeriod;
+    }
+
     @Override
     public void loanItem(String userID, String barcode) {
         super.loanItem(userID, barcode);
-        super.setLoanPeriod(30);
+        super.setLoanPeriod(loanPeriod);
     }
 
     @Override

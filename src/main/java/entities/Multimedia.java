@@ -6,6 +6,7 @@ public class Multimedia extends LibraryItems {
     private String artist;
     // renewLimit is const, so will not change
     private static final int renewLimit = 3;
+    private static final int loanPeriod = 7;
     public Multimedia(String barcode, String artist, String title, String year, String isbn) {
         super(barcode, title, year, isbn);
         this.artist = artist;
@@ -16,11 +17,22 @@ public class Multimedia extends LibraryItems {
         return this.artist;
     }
 
+
+    public int getRenewLimit(){
+        return renewLimit;
+    }
+
+
+    public int getLoanPeriod(){
+        return loanPeriod;
+    }
+
+
     // Implemention of overriden book specific methods
     @Override
     public void loanItem(String userID, String barcode) {
         super.loanItem(userID, barcode);
-        super.setLoanPeriod(7);
+        super.setLoanPeriod(loanPeriod);
     }
 
     @Override

@@ -79,10 +79,11 @@ public class Library {
     // Check if user exists (needed for loaning)
    public boolean checkUserExists(String userID){
         for (Users user : users){
-            if (!user.getUserID().equals(userID)){
-
+            if (user.getUserID().equals(userID)){
+                return true;
             }
         }
+        return false;
    }
 
 
@@ -93,7 +94,13 @@ public class Library {
             if (item.isLendable(barcode)){
                 // Sets loanDate to current date and dueDate to loanDate + loanPeriod
                 LocalDate loanDate = LocalDate.now();
-                LocalDate dueDate = loanDate.plusDays(item.getLoanPeriod());
+                // Determines loan period based on the instance of the object (book/multimedia)
+                LocalDate dueDate;
+                if (item instanceof Books){
+                    dueDate = loanDate.plusDays(((Books) item).getLoanPeriod());
+                }else{
+                    dueDate = loanDate.plusDays(((Multimedia) item).getLoanPeriod());
+                }
                 // Creates a new loan object
                 // marks as not lendable
                 // adds loan the loans arrayList
@@ -157,10 +164,9 @@ public class Library {
         }catch(Exception e){
             logger.warning("Error displaying current loans: " + e);
         }
-
     }
 
-    // Get all loans that are currently unreturned
+    // Get all items that are currently on loan
 
     // Get all loans that are overdue
 

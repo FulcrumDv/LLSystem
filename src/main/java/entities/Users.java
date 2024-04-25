@@ -2,12 +2,14 @@ package entities;
 
 public class Users {
     private String userID;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
 
-    public Users(String userID, String name, String email) {
+    public Users(String userID, String firstName, String lastName, String email) {
         this.userID = userID;
-        this.name = name;
+        this.firstName= firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -18,7 +20,7 @@ public class Users {
     }
 
     public String getName(){
-        return this.name;
+        return this.firstName + " " + this.lastName;
     }
 
     public String getEmail(){

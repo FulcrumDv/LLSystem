@@ -6,7 +6,7 @@ public class Menu {
     private Library library;
 
     public Menu() {
-        Library library = new Library();
+         this.library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
     }
 
     public void startMenu() {
@@ -62,8 +62,49 @@ public class Menu {
                     }
                     break;
                 case 3:
-                    System.out.println("You've chosen to renew a loan, please enter the barcode of the item you wish to renew");
-
+                    System.out.println("Dou want to renew a loan? (Y/N): ");
+                    String renewAnswer = input.next();
+                    if (renewAnswer.equals("Y") || renewAnswer.equals("y")){
+                        System.out.println("You've chosen to renew a loan, please enter the barcode of the item you wish to renew");
+                        System.out.println("Barcode: ");
+                        String barcodeForRenew = input.next();
+                        library.renewLoan(barcodeForRenew);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Do you want to display loans of a user? (Y/N): ");
+                    String displayAnswer = input.next();
+                    if (displayAnswer.equals("Y") || displayAnswer.equals("y")){
+                        System.out.println("You've chosen to display loans on a user, please enter the user ID");
+                        System.out.println("User ID: ");
+                        String userIDForDisplay = input.next();
+                        library.userLoans(userIDForDisplay);
+                    }
+                    break;
+                case 5:
+                    System.out.println("Do you want to display all loans (Y/N): ");
+                    String displayAllAnswer = input.next();
+                    if (displayAllAnswer.equals("Y") || displayAllAnswer.equals("y")){
+                        System.out.println("You've chosen to display all loans");
+                        library.displayAllLoans();
+                    }
+                    break;
+                case 6:
+                    System.out.println("Do you want to display all users (Y/N): ");
+                    String displayUsersAnswer = input.next();
+                    if (displayUsersAnswer.equals("Y") || displayUsersAnswer.equals("y")){
+                        System.out.println("You've chosen to display all users");
+                        //library.displayAllUsers();
+                    }
+                    break;
+                case 7:
+                    System.out.println("Do you want to quit (Y/N): ");
+                    String quitAnswer = input.next();
+                    if (quitAnswer.equals("Y") || quitAnswer.equals("y")){
+                        System.out.println("You've chosen to quit, goodbye!");
+                        running = false;
+                    }
+                    break;
             }
 
         }

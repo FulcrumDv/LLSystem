@@ -8,18 +8,20 @@ import java.time.LocalDate;
 public class Loans {
     String barcode;
     String userID;
-
     String title;
+    String mediaType;
+
 
     // Local date allows the program to get the current data and time which can be used to calculate the due date
     LocalDate loanDate;
     LocalDate dueDate;
     int numberOfRenews;
 
-    public Loans(String barcode, String userID, String title, LocalDate loanDate, LocalDate dueDate){
+    public Loans(String barcode, String userID, String title, String mediaType, LocalDate loanDate, LocalDate dueDate){
         this.barcode = barcode;
         this.userID = userID;
         this.title = title;
+        this.mediaType = mediaType;
         this.loanDate = loanDate;
         this.dueDate = dueDate;
         this.numberOfRenews = 0;
@@ -36,6 +38,10 @@ public class Loans {
 
     public String getTitle(){
         return this.title;
+    }
+
+    public String getMediaType(){
+        return this.mediaType;
     }
 
     public LocalDate getLoanDate(){

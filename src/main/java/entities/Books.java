@@ -10,9 +10,10 @@ public class Books extends LibraryItems{
     // renewLimit is const, so will not change
     private static final int renewLimit = 3;
     private final int loanPeriod = 30;
+    private static final int renewPeriod = 14;
 
-    public Books(String barcode, String author, String title, String year, String isbn){
-        super(barcode, title, year, isbn);
+    public Books(String barcode, String author, String title, String mediaType, String year, String isbn){
+        super(barcode, title, mediaType, year, isbn);
         this.author = author;
     }
 
@@ -21,9 +22,14 @@ public class Books extends LibraryItems{
         return this.author;
     }
 
-    public int getRenewLimit(){
+    public static int getRenewLimit(){
         return renewLimit;
     }
+
+    public static int getRenewPeriod(){
+        return renewPeriod;
+    }
+
 
     public int getLoanPeriod(){
         return loanPeriod;

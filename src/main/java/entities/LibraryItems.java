@@ -5,17 +5,21 @@ package entities;
  * gives default implementation for the returnItem and isLendable methods
  */
 public abstract class LibraryItems implements LendableItem {
-    private String barcode;
-    private String title;
-    private String year;
-    private String isbn;
+    private final String barcode;
+    private final String title;
+    private final String mediaType;
+    private final String year;
+    private final String isbn;
     private boolean isLendable;
     private int loanPeriod;
-    public LibraryItems (String barcode, String title, String year, String ISBN) {
+
+    public LibraryItems (String barcode, String title, String mediaType, String year, String ISBN) {
         this.barcode = barcode;
         this.title = title;
+        this.mediaType = mediaType;
         this.year = year;
         this.isbn = ISBN;
+
         // items are lendable by default
         this.isLendable = true;
         // default loan period is 0 as object types (book/multimedia) will determine their own loan period
@@ -31,6 +35,9 @@ public abstract class LibraryItems implements LendableItem {
         return this.title;
     }
 
+    public String getMediaType(){
+        return this.mediaType;
+    }
     public String getYear(){
         return this.year;
     }

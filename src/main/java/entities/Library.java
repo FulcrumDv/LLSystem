@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.time.LocalDate;
+import tools.ReadCSV;
 
 /* This class holds the necessary functions to manage the users and loans of the library
  * It holds functions to add loans, remove loans, get all loans that a user has loaned out and loans of all users
@@ -13,9 +14,11 @@ import java.time.LocalDate;
 public class Library {
 
     // Logging object for error handling
+
     Logger logger = Logger.getLogger(Library.class.getName());
 
     // may change some from ArrayList to hashmap
+
     private final List<Users> users;
     private final List<Loans> loans;
     private final List<LibraryItems> items;
@@ -23,12 +26,17 @@ public class Library {
     private final List<Loans> returnedLoans;
     private final List<Loans> allLoansOfUser;
 
-    public Library(){
+    // Constructor
+    public Library(String ItemFilePath, String UserFilePath){
         this.users = new ArrayList<>();
         this.loans = new ArrayList<>();
         this.returnedLoans = new ArrayList<>();
         this.items= new ArrayList<>();
         this.allLoansOfUser = new ArrayList<>();
+
+        ReadCSV readCSV = new ReadCSV();
+        this.items.addAll(readCSV.readItems(ItemFilePath));
+        this.users.addAll(readCSV.readUsers(UserFilePath));
     }
 
     // Getters
@@ -52,10 +60,11 @@ public class Library {
         return allLoansOfUser;
     }
 
+    // Methods for managing the library System
 
     // Add user, parameters follow structure of the CSV file
-    public void addUser(String userID, String name, String email){
-        Users user = new Users(userID, name, email);
+    public void addUser(String userID, String firstName, String lastName, String email){
+        Users user = new Users(userID, firstName, lastName, email);
         this.users.add(user);
     }
 
@@ -77,14 +86,14 @@ public class Library {
     }
 
     // Check if user exists (needed for loaning)
-   public boolean checkUserExists(String userID){
+    public boolean checkUserExists(String userID){
         for (Users user : users){
             if (user.getUserID().equals(userID)){
                 return true;
             }
         }
         return false;
-   }
+    }
 
 
     // Loan out an item by supplying userId and barcode
@@ -104,7 +113,7 @@ public class Library {
                 // Creates a new loan object
                 // marks as not lendable
                 // adds loan the loans arrayList
-                Loans loan = new Loans(barcode, userID, item.getTitle(), loanDate, dueDate);
+                Loans loan = new Loans(barcode, userID, item.getTitle(), item.getMediaType(), loanDate, dueDate);
                 item.loanItem(userID, barcode);
                 loans.add(loan);
             }
@@ -143,6 +152,37 @@ public class Library {
         }
     }
 
+    // Renewing a loan
+    public void renewLoan(String barcode){
+        try{
+            for (Loans loan : loans){
+                if (loan.getBarcode().equals(barcode)){
+                    // find item to so that the type instance of the object can be determined
+                    if (searchForItem(barcode) instanceof Books){
+                        // If no. of renews is less than
+                        if (loan.getNumberOfRenews() < Books.getRenewLimit()){
+                            loan.setDueDate(loan.getDueDate().plusDays(Books.getRenewPeriod()));
+                            loan.incrementNumberOfRenews();
+                        }else{
+                            System.out.println("Number of renews exceeded! Book needs to be returned!");
+                        }
+
+                        // For readability, using else if to show that the item is a multimedia
+                    }else if (searchForItem(barcode) instanceof Multimedia){
+                        if (loan.getNumberOfRenews() < Multimedia.getRenewLimit()){
+                            loan.setDueDate(loan.getDueDate().plusDays(Multimedia.getRenewPeriod()));
+                            loan.incrementNumberOfRenews();
+                        }else{
+                            System.out.println("Number of renews exceeded! Book needs to be returned!");
+                        }
+                    }
+                }
+            }
+        }catch (Exception e){
+            logger.warning("Error renewing loan: " + e);
+        }
+    }
+
     // Get all loans of a specific user
     public void userLoans(String userID){
         // First gets user id corresponding to the loan and adds to allLoansOfUser ArrayList
@@ -152,7 +192,6 @@ public class Library {
                     allLoansOfUser.add(loan);
                 }
             }
-
             // Displaying the current Loans
             for (Loans loan : loans){
                 System.out.println("Barcode: " + loan.getBarcode() +
@@ -167,7 +206,24 @@ public class Library {
     }
 
     // Get all items that are currently on loan
-
+    public void displayAllLoans(){
+        try{
+            System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------");
+            for (Loans loan : loans){
+                System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n",
+                        loan.getBarcode(),
+                        loan.getUserID(),
+                        loan.getTitle(),
+                        loan.getMediaType(),
+                        loan.getLoanDate(),
+                        loan.getDueDate(),
+                        loan.getNumberOfRenews());
+            }
+        }catch (Exception e){
+            logger.warning("Error displaying all loans: " + e);
+        }
+    }
     // Get all loans that are overdue
 
 

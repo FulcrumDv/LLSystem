@@ -1,4 +1,5 @@
 package entities;
+// This class holds the structure for a user object in the library
 
 public class Users {
     private String userID;
@@ -19,8 +20,12 @@ public class Users {
         return this.userID;
     }
 
-    public String getName(){
-        return this.firstName + " " + this.lastName;
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastName;
     }
 
     public String getEmail(){

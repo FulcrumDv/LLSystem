@@ -2,20 +2,18 @@ package entities;
 import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
-/**
- *  Describes the loans and users that are associated with the loans
- */
+//This class describes structure for a loan object in the library
 public class Loans {
     String barcode;
     String userID;
     String title;
     String mediaType;
-
-
     // Local date allows the program to get the current data and time which can be used to calculate the due date
     LocalDate loanDate;
     LocalDate dueDate;
     int numberOfRenews;
+    boolean isRenewable;
+    LocalDate dateReturned;
 
     public Loans(String barcode, String userID, String title, String mediaType, LocalDate loanDate, LocalDate dueDate){
         this.barcode = barcode;
@@ -25,6 +23,8 @@ public class Loans {
         this.loanDate = loanDate;
         this.dueDate = dueDate;
         this.numberOfRenews = 0;
+        this.isRenewable = true;
+        this.dateReturned= null;
     }
 
     // Getters
@@ -54,6 +54,22 @@ public class Loans {
 
     public int getNumberOfRenews(){
         return this.numberOfRenews;
+    }
+
+    public boolean getIsRenewable(){
+        return this.isRenewable;
+    }
+
+    public void setIsRenewable(boolean isRenewable){
+        this.isRenewable = isRenewable;
+    }
+
+    public LocalDate getDateReturned(){
+        return this.dateReturned;
+    }
+
+    public void setDateReturned(LocalDate dateReturned){
+        this.dateReturned = dateReturned;
     }
 
     // may be irrelevant as there is now an increment method but could be used to alter to specific number if needed

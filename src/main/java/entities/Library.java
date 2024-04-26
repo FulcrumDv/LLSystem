@@ -40,16 +40,8 @@ public class Library {
     }
 
     // Getters
-    public List<Users> getUsers(){
-        return users;
-    }
-
     public List<Loans> getLoans(){
         return loans;
-    }
-
-    public List<LibraryItems> getItems(){
-        return items;
     }
 
     public List<Loans> getReturnedLoans(){
@@ -59,7 +51,6 @@ public class Library {
     public List<Loans> getAllLoansOfUser(){
         return allLoansOfUser;
     }
-
     // Methods for managing the library System
 
     // Add user, parameters follow structure of the CSV file
@@ -75,6 +66,8 @@ public class Library {
             for (LibraryItems item : items){
                 if(item.getBarcode().equals(barcode)){
                     return item;
+                }else{
+                    System.out.println("Item not found!");
                 }
             }
         }catch (Exception e){
@@ -90,6 +83,8 @@ public class Library {
         for (Users user : users){
             if (user.getUserID().equals(userID)){
                 return true;
+            }else{
+                System.out.println("User does not exist!");
             }
         }
         return false;
@@ -116,6 +111,8 @@ public class Library {
                 Loans loan = new Loans(barcode, userID, item.getTitle(), item.getMediaType(), loanDate, dueDate);
                 item.loanItem(userID, barcode);
                 loans.add(loan);
+            }else{
+                System.out.println("Item is not lendable!");
             }
         }catch (Exception e){
             logger.warning("Error loaning item: " + e);
@@ -143,7 +140,10 @@ public class Library {
                     }else{
                         // Calls returnItem from libraryItems on the barcode of object
                         item.returnItem(barcode);
+                        loan.setDateReturned(LocalDate.now());
                     }
+                }else{
+                    System.out.println("Can not return item, Loan not found!");
                 }
             }
         }
@@ -153,7 +153,7 @@ public class Library {
     }
 
     // Renewing a loan
-    public void renewLoan(String barcode){
+    public boolean renewLoan(String barcode){
         try{
             for (Loans loan : loans){
                 if (loan.getBarcode().equals(barcode)){
@@ -163,8 +163,10 @@ public class Library {
                         if (loan.getNumberOfRenews() < Books.getRenewLimit()){
                             loan.setDueDate(loan.getDueDate().plusDays(Books.getRenewPeriod()));
                             loan.incrementNumberOfRenews();
+                            return true;
                         }else{
                             System.out.println("Number of renews exceeded! Book needs to be returned!");
+                            loan.setIsRenewable(false);
                         }
 
                         // For readability, using else if to show that the item is a multimedia
@@ -172,15 +174,20 @@ public class Library {
                         if (loan.getNumberOfRenews() < Multimedia.getRenewLimit()){
                             loan.setDueDate(loan.getDueDate().plusDays(Multimedia.getRenewPeriod()));
                             loan.incrementNumberOfRenews();
+                            return true;
                         }else{
                             System.out.println("Number of renews exceeded! Book needs to be returned!");
+                            loan.setIsRenewable(false);
                         }
                     }
+                }else{
+                    System.out.println("Cannot renew loan! Loan not found!");
                 }
             }
         }catch (Exception e){
             logger.warning("Error renewing loan: " + e);
         }
+        return false;
     }
 
     // Get all loans of a specific user
@@ -208,10 +215,10 @@ public class Library {
     // Get all items that are currently on loan
     public void displayAllLoans(){
         try{
-            System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
+            System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
             System.out.println("--------------------------------------------------------------------------------------------------------------------");
             for (Loans loan : loans){
-                System.out.printf("%-15s %-15s %-15s %-15s %-15s %-15s %-15s\n",
+                System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
                         loan.getBarcode(),
                         loan.getUserID(),
                         loan.getTitle(),
@@ -224,10 +231,42 @@ public class Library {
             logger.warning("Error displaying all loans: " + e);
         }
     }
-    // Get all loans that are overdue
 
+    public void displayAllUsers(){
+        try{
+            System.out.printf("%-15s %-15s %-15s %-15s\n", "User ID", "First Name", "Last Name", "Email");
+            System.out.println("---------------------------------------------------------------------------------------------------------");
+            for (Users user : users){
+                System.out.printf("%-15s %-15s %-15s %-15s\n",
+                        user.getUserID(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail());
+            }
+        }catch (Exception e){
+            logger.warning("Error displaying all users: " + e);
+        }
+    }
 
-
+    public void displayHistoryOfReturnedLoans(){
+        try{
+            System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Date returned", "Number of renews");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+            for (Loans loan : returnedLoans){
+                System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s %-15s\n",
+                        loan.getBarcode(),
+                        loan.getUserID(),
+                        loan.getTitle(),
+                        loan.getMediaType(),
+                        loan.getLoanDate(),
+                        loan.getDueDate(),
+                        loan.getDateReturned(),
+                        loan.getNumberOfRenews());
+            }
+        }catch (Exception e){
+            logger.warning("Error displaying all loans: " + e);
+        }
+    }
 
 
 

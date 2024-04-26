@@ -55,7 +55,7 @@ public class Multimedia extends LibraryItems {
                 System.out.println("Number of renews exceeded! Book MUST be returned!");
             }
         }catch (Exception e){
-           logger.warning("Error with incrementing number of renews: " + e);
+            logger.warning("Error with incrementing number of renews: " + e);
         }
 
     }

@@ -2,6 +2,7 @@ package userInterface;
 import entities.Library;
 import java.util.Objects;
 import java.util.Scanner;
+import entities.LibraryItems;
 
 public class MenuService {
 
@@ -11,23 +12,18 @@ public class MenuService {
         this.library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
     }
 
-
     Scanner input = new Scanner(System.in);
-
-    // display goodbye message (an attempt to make the code more readable)
-    public void goodBye() {
-        System.out.println("Thank you!. Goodbye!");
-    }
-
     /* ask user if they want to continue after choosing an option
        and calls clearConsole if that answer is yes
      */
+
     public boolean askUserToContinue() {
         Scanner input = new Scanner(System.in);
         System.out.println("\nDo you want to make another selection? (Y/N): ");
         String programContinue = input.next();
         if (Objects.equals(programContinue, "N") || Objects.equals(programContinue, "n")) {
-            goodBye();
+
+            System.out.println("Thank you!. Goodbye!");
             return false;
         }
 
@@ -37,19 +33,15 @@ public class MenuService {
 
     // 1. Issue a loan
     public void issueLoanSelection() {
-        System.out.print("Do you want to issue a loan (Y/N): ");
-        String loanAnswer = input.next();
-        if (loanAnswer.equals("Y") || loanAnswer.equals("y")) {
-            System.out.println("\nEnter the user ID and the barcode of the item");
-            System.out.print("User ID: ");
-            String userID = input.next();
-            System.out.print("Barcode: ");
-            String barcode = input.next();
-            library.loanItem(barcode, userID);
+        System.out.println("\nEnter the user ID and the barcode of the item");
+        System.out.print("User ID: ");
+        String userID = input.next();
+        System.out.print("Barcode: ");
+        String barcode = input.next();
+        if (library.loanItem(barcode, userID)) {
             System.out.println("Loan created successfully!\n\n\n");
         }
     }
-
     // 2. Return a loan
     public void returnLoanSelection() {
         System.out.print("Do you want to return a loan? (Y/N): ");
@@ -58,7 +50,9 @@ public class MenuService {
             System.out.println("\nEnter the barcode of the item you wish to return");
             System.out.print("Barcode: ");
             String barcodeForReturn = input.next();
-            library.returnLoan(barcodeForReturn);
+            if(library.returnLoan(barcodeForReturn)){
+                System.out.println("Loan returned successfully!");
+            }
         }
     }
 
@@ -77,7 +71,24 @@ public class MenuService {
         }
     }
 
-    // 4. Display loans on a user
+    // 4. Look up Item
+    public void lookUpItemSelection() {
+        System.out.print("Do you want to look up an item? (Y/N): ");
+        String lookUpAnswer = input.next();
+        if (lookUpAnswer.equals("Y") || lookUpAnswer.equals("y")) {
+            System.out.println("Enter the barcode of the item you wish to look up");
+            System.out.print("Barcode: ");
+            String barcodeForLookUp = input.next();
+            LibraryItems item = library.searchForItem(barcodeForLookUp);
+            if (item != null) {
+                item.getInformationOnItems();
+            } else {
+                System.out.println("Barcode doesn't match any item in the library");
+            }
+        }
+    }
+
+    // 5. Display loans on a user
     public void displayLoansOnUserSelection() {
         System.out.print("Do you want to display loans of a user? (Y/N): ");
         String displayAnswer = input.next();
@@ -89,16 +100,22 @@ public class MenuService {
         }
     }
 
-    // 5. Display all loans
+    // 6. Display all loans
     public void displayAllLoansSelection(){
         System.out.print("Do you want to display all loans (Y/N): ");
         String displayAllAnswer = input.next();
         if (displayAllAnswer.equals("Y") || displayAllAnswer.equals("y")){
             library.displayAllLoans();
         }
+
+        System.out.print("\n\nDisplay Loan Statistics? (Y/N): ");
+        String displayStatisticsAnswer = input.next();
+        if (displayStatisticsAnswer.equals("Y") || displayStatisticsAnswer.equals("y")){
+            library.LoanStatistics();
+        }
     }
 
-    // 6. Display all users
+    // 7. Display all users
     public void displayAllUsersSelection(){
         System.out.print("Do you want to display all users (Y/N): ");
         String displayUsersAnswer = input.next();
@@ -106,7 +123,7 @@ public class MenuService {
             library.displayAllUsers();
         }
     }
-    // 7. Display a history of returned loans
+    // 8. Display a history of returned loans
     public void displayHistoryLoansSelection(){
         System.out.println("Do you want to display a history of returned loans? (Y/N): ");
         String displayHistoryAnswer = input.next();
@@ -116,7 +133,7 @@ public class MenuService {
     }
 
 
-    // 8. Quit without saving
+    // 9. Quit without saving
     public void quitWithoutSavingSelection() {
         System.out.print("Are you sure you want to quit without saving? (Y/N): ");
         String quitAnswer = input.next();
@@ -125,7 +142,7 @@ public class MenuService {
         }
     }
 
-    // 9. Save and quit
+    // 10. Save and quit
     public void saveAndQuit() {
         System.out.println("Are you sure you want to save and quit? (Y/N): ");
         String saveAnswer = input.next();

@@ -13,63 +13,53 @@ public class MenuDisplay {
         boolean running = true;
 
         while (running) {
-            // Ascii art that displays "Library Loan System"
-            System.out.println("""
+            // Display the ACSCII art
+            ConsoleManager.displayAsciiArt();
+            // Display the menu options
+            ConsoleManager.displaySelectionMenu();
 
-
-                    ╔─────────────────────────────────────────────────────────────────────────────────╗
-                    │ _    _ _                        _                     ___         _             │
-                    │| |  (_) |__ _ _ __ _ _ _ _  _  | |   ___  __ _ _ _   / __|_  _ __| |_ ___ _ __  │
-                    │| |__| | '_ \\ '_/ _` | '_| || | | |__/ _ \\/ _` | ' \\  \\__ \\ || (_-<  _/ -_) '  \\ │
-                    │|____|_|_.__/_| \\__,_|_|  \\_, | |____\\___/\\__,_|_||_| |___/\\_, /__/\\__\\___|_|_|_|│
-                    │                          |__/                             |__/                  │
-                    ╚─────────────────────────────────────────────────────────────────────────────────╝
-
-                    """);
-
-            // Display's the menu options for the librarian to select
-            System.out.println("Welcome! Please select one of the following options below by entering the corresponding number:");
-            System.out.println("1. Issue a loan");
-            System.out.println("2. Return a loan");
-            System.out.println("3. Renew a loan");
-            System.out.println("4. Display loans on a user");
-            System.out.println("5. Display all loans");
-            System.out.println("6. Display all users");
-            System.out.println("7. Display a history of returned loans");
-            System.out.println("8. Quit without saving");
-            System.out.println("9. Save and Quit");
-            System.out.print("> ");
+            // Get the user input
             int userInput = input.nextInt();
 
+            // Handle user input using switch cases
             switch (userInput) {
                 case 1:
-                    menuService.issueLoanSelection();
-                    System.out.println("Would you like to create another loan? (Y/N): ");
-                    String createAnotherLoan = input.next();
-                    if (createAnotherLoan.equals("Y") || createAnotherLoan.equals("y")) {
+                    boolean createAnotherLoan = true;
+                    while (createAnotherLoan) {
                         menuService.issueLoanSelection();
+                        System.out.println("Would you like to create another loan? (Y/N): ");
+                        String createAnotherLoanString = input.next();
+                        if (createAnotherLoanString.equals("N") || createAnotherLoanString.equals("n")) {
+                            createAnotherLoan = false;
+                        }
                     }
 
                     ConsoleManager.clearConsole();
                     break;
 
                 case 2:
-                    menuService.returnLoanSelection();
-                    System.out.println("Would you like to return another loan? (Y/N): ");
-                    String returnAnotherLoan = input.next();
-                    if (returnAnotherLoan.equals("Y") || returnAnotherLoan.equals("y")) {
+                    boolean returnAnotherLoan = true;
+                    while (returnAnotherLoan) {
                         menuService.returnLoanSelection();
+                        System.out.println("Would you like to return another item? (Y/N): ");
+                        String returnAnotherLoanString = input.next();
+                        if (returnAnotherLoanString.equals("N") || returnAnotherLoanString.equals("n")) {
+                            returnAnotherLoan = false;
+                        }
                     }
 
                     ConsoleManager.clearConsole();
                     break;
 
                 case 3:
-                    menuService.renewLoanSelection();
-                    System.out.println("Would you like to renew another loan? (Y/N): ");
-                    String renewAnotherLoan = input.next();
-                    if (renewAnotherLoan.equals("Y") || renewAnotherLoan.equals("y")) {
+                    boolean renewAnotherLoan = true;
+                    while (renewAnotherLoan) {
                         menuService.renewLoanSelection();
+                        System.out.println("Would you like to renew another loan? (Y/N): ");
+                        String renewAnotherLoanString = input.next();
+                        if (renewAnotherLoanString.equals("N") || renewAnotherLoanString.equals("n")) {
+                            renewAnotherLoan = false;
+                        }
                     }
 
                     ConsoleManager.clearConsole();
@@ -85,23 +75,28 @@ public class MenuDisplay {
 
                     ConsoleManager.clearConsole();
                     break;
+
                 case 5:
+                   menuService.lookUpItemSelection();
+                   running = menuService.askUserToContinue();
+                   break;
+                case 6:
                     menuService.displayAllLoansSelection();
                     running = menuService.askUserToContinue();
                     break;
-                case 6:
+                case 7:
                     menuService.displayAllUsersSelection();
                     running = menuService.askUserToContinue();
                     break;
-                case 7:
+                case 8:
                     menuService.displayHistoryLoansSelection();
                     running = menuService.askUserToContinue();
                     break;
-                case 8:
+                case 9:
                     menuService.quitWithoutSavingSelection();
                     running = false;
                     break;
-                case 9:
+                case 10:
                     menuService.saveAndQuit();
                     running = false;
                     break;

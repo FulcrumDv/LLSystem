@@ -1,8 +1,8 @@
 package entities;
 
 /* This is an abstract class that provides the basic structure for all library items
- * implements lendable item interface
- * gives default implementation for the returnItem and isLendable methods
+   - it implements lendable item interface
+   - gives default implementation for the returnItem and isLendable methods
  */
 public abstract class LibraryItems implements LendableItem {
     private final String barcode;
@@ -38,13 +38,6 @@ public abstract class LibraryItems implements LendableItem {
     public String getMediaType(){
         return this.mediaType;
     }
-    public String getYear(){
-        return this.year;
-    }
-
-    public String getISBN(){
-        return this.isbn;
-    }
 
     public int getLoanPeriod(){
         return this.loanPeriod;
@@ -71,12 +64,18 @@ public abstract class LibraryItems implements LendableItem {
         this.isLendable = false;
     }
 
-    // default display of all lendable items
-    public String getLendables(){
-        return "Barcode: " + this.barcode +
-                "Title: " + this.title +
-                "Year: " + this.year +
-                "ISBN: " + this.isbn;
+    public void printAvailability(){
+        if (this.isLendable){
+            System.out.println("available");
+        }else{
+            System.out.println("on loan");
+        }
     }
 
+    // default display of all lendable items
+    public void getInformationOnItems(){
+        System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "Title", "Media Type", "Year", "ISBN", "Loan Period", "Availability");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", this.barcode, this.title, this.mediaType, this.year, this.isbn, this.loanPeriod, this.isLendable);
+    }
 }

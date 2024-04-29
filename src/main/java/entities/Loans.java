@@ -1,5 +1,4 @@
 package entities;
-import java.time.temporal.ChronoUnit;
 import java.time.LocalDate;
 
 //This class describes structure for a loan object in the library
@@ -56,10 +55,6 @@ public class Loans {
         return this.numberOfRenews;
     }
 
-    public boolean getIsRenewable(){
-        return this.isRenewable;
-    }
-
     public void setIsRenewable(boolean isRenewable){
         this.isRenewable = isRenewable;
     }
@@ -72,12 +67,7 @@ public class Loans {
         this.dateReturned = dateReturned;
     }
 
-    // may be irrelevant as there is now an increment method but could be used to alter to specific number if needed
-    public int setNumberOfRenews(int numberOfRenews){
-        return this.numberOfRenews = numberOfRenews;
-    }
-
-    public void incrementNumberOfRenews(){
+     public void incrementNumberOfRenews(){
         this.numberOfRenews++;
     }
 
@@ -86,11 +76,4 @@ public class Loans {
     public void setDueDate(LocalDate dueDate){
         this.dueDate = dueDate;
     }
-
-    // getter for how many days are left on the loan
-    public long getDaysLeft(){
-        return ChronoUnit.DAYS.between(LocalDate.now(), this.dueDate);
-    }
-
-
 }

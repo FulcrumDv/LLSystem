@@ -1,10 +1,8 @@
 package entities;
-import java.util.logging.Logger;
+
 // Multimedia is a subclass of LibraryItems and Inherits the properties of LibraryItems
 public class Multimedia extends LibraryItems {
-    Logger logger = Logger.getLogger(Multimedia.class.getName());
-
-    private String artist;
+    private final String artist;
     // renewLimit is const, so will not change
     private static final int renewLimit = 3;
     private static final int loanPeriod = 7;
@@ -16,11 +14,6 @@ public class Multimedia extends LibraryItems {
     }
 
     // Getter
-    public String getAuthor() {
-        return this.artist;
-    }
-
-
     public static int getRenewLimit(){
         return renewLimit;
     }
@@ -34,6 +27,10 @@ public class Multimedia extends LibraryItems {
         return loanPeriod;
     }
 
+    @Override
+    public String getCreator() {
+        return this.artist;
+    }
 
     // Implemention of overriden book specific methods
     @Override
@@ -45,18 +42,5 @@ public class Multimedia extends LibraryItems {
     @Override
     public void returnItem(String barcode) {
         super.returnItem(barcode);
-    }
-
-    public void incrementNumberOfRenews(Loans loan) {
-        try{
-            if (loan.getNumberOfRenews() < renewLimit) {
-                loan.incrementNumberOfRenews();
-            } else {
-                System.out.println("Number of renews exceeded! Book MUST be returned!");
-            }
-        }catch (Exception e){
-            logger.warning("Error with incrementing number of renews: " + e);
-        }
-
     }
 }

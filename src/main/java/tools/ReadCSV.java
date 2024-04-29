@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Logger;
+
 import entities.Users;
 
 // Tasks
@@ -15,6 +17,9 @@ import entities.Users;
  *
  */
 public class ReadCSV {
+
+    Logger logger = Logger.getLogger(ReadCSV.class.getName());
+
     public static final String delimiter = ",";
     // Reads in the specified file and returns a list of LibraryItems
     public List<LibraryItems> readItems(String filepath){
@@ -40,7 +45,7 @@ public class ReadCSV {
                 }
             }
         }catch (IOException e){
-            e.printStackTrace();
+            logger.warning("Error reading file: " + e);
         }
 
         return items;
@@ -59,7 +64,7 @@ public class ReadCSV {
                 users.add(new entities.Users(tempArray[0], tempArray[1], tempArray[2], tempArray[3]));
             }
         }catch (IOException e){
-            e.printStackTrace();
+            logger.warning("Error reading file: " + e);
         }
 
         return users;

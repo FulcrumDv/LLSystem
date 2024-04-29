@@ -3,6 +3,7 @@ import entities.Library;
 import java.util.Objects;
 import java.util.Scanner;
 import entities.LibraryItems;
+import tools.WriteCSV;
 
 public class MenuService {
 
@@ -110,6 +111,7 @@ public class MenuService {
 
         System.out.print("\n\nDisplay Loan Statistics? (Y/N): ");
         String displayStatisticsAnswer = input.next();
+        System.out.println();
         if (displayStatisticsAnswer.equals("Y") || displayStatisticsAnswer.equals("y")){
             library.LoanStatistics();
         }
@@ -144,11 +146,13 @@ public class MenuService {
 
     // 10. Save and quit
     public void saveAndQuit() {
+        WriteCSV writeCSV = new WriteCSV();
+
         System.out.println("Are you sure you want to save and quit? (Y/N): ");
         String saveAnswer = input.next();
         if (saveAnswer.equals("Y") || saveAnswer.equals("y")) {
             System.out.println("Saving changes...");
-            // write to file call
+            writeCSV.writeLoans("src/main/resources/LOANS.csv", library.getLoans());
             System.out.println("Changes saved. Goodbye!");
         }
     }

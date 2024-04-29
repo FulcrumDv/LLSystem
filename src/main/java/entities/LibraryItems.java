@@ -39,6 +39,9 @@ public abstract class LibraryItems implements LendableItem {
         return this.mediaType;
     }
 
+    // abstract method allowing subclasses to implement their own version of getAuthor
+    public abstract String getCreator();
+
     public int getLoanPeriod(){
         return this.loanPeriod;
     }
@@ -64,18 +67,20 @@ public abstract class LibraryItems implements LendableItem {
         this.isLendable = false;
     }
 
-    public void printAvailability(){
+    public String printAvailability(){
+        String availability;
         if (this.isLendable){
-            System.out.println("available");
+            availability = "available";
         }else{
-            System.out.println("on loan");
+            availability = "on loan";
         }
+        return availability;
     }
 
     // default display of all lendable items
     public void getInformationOnItems(){
-        System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "Title", "Media Type", "Year", "ISBN", "Loan Period", "Availability");
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", this.barcode, this.title, this.mediaType, this.year, this.isbn, this.loanPeriod, this.isLendable);
+        System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "Author", "Title", "Media Type", "Year", "ISBN", "Availability");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", this.barcode, getCreator(), this.title, this.mediaType, this.year, this.isbn, printAvailability());
     }
 }

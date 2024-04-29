@@ -2,10 +2,10 @@ package entities;
 // This class holds the structure for a user object in the library
 
 public class Users {
-    private String userID;
-    private String firstName;
-    private String lastName;
-    private String email;
+    private final String userID;
+    private final String firstName;
+    private final String lastName;
+    private final String email;
 
     public Users(String userID, String firstName, String lastName, String email) {
         this.userID = userID;

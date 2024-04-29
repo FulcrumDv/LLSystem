@@ -64,8 +64,11 @@ public class MenuDisplay {
 
                     ConsoleManager.clearConsole();
                     break;
-
                 case 4:
+                    menuService.lookUpItemSelection();
+                    running = menuService.askUserToContinue();
+                    break;
+                case 5:
                     menuService.displayLoansOnUserSelection();
                     System.out.println("Would you like to display loans of another user? (Y/N): ");
                     String displayAnotherUser = input.next();
@@ -75,11 +78,6 @@ public class MenuDisplay {
 
                     ConsoleManager.clearConsole();
                     break;
-
-                case 5:
-                   menuService.lookUpItemSelection();
-                   running = menuService.askUserToContinue();
-                   break;
                 case 6:
                     menuService.displayAllLoansSelection();
                     running = menuService.askUserToContinue();

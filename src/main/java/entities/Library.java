@@ -1,5 +1,4 @@
 package entities;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,6 +24,7 @@ public class Library {
     // This is my way of keeping a history when a loan is returned
     private final List<Loans> returnedLoans;
     private final List<Loans> allLoansOfUser;
+    private final String libraryName = "Ulster University Library";
 
     // Constructor
     public Library(String ItemFilePath, String UserFilePath) {
@@ -37,6 +37,10 @@ public class Library {
         ReadCSV readCSV = new ReadCSV();
         this.items.addAll(readCSV.readItems(ItemFilePath));
         this.users.addAll(readCSV.readUsers(UserFilePath));
+    }
+
+    public List<Loans> getLoans(){
+        return loans;
     }
 
     // Methods for managing the library System
@@ -268,7 +272,6 @@ public class Library {
         int bookLoansCount = 0;
         int multimediaLoansCount = 0;
         int renewedLoansCount = 0;
-
         // counts number of loans for books and multimedia
         for (Loans loan : loans){
             if (searchForItem(loan.getBarcode()) instanceof Books){
@@ -282,11 +285,14 @@ public class Library {
                 renewedLoansCount++;
             }
         }
-
         // Displaying stats of loans
+        System.out.println("            "+this.libraryName);
+        System.out.println("------------------------------------------------------\n");
         System.out.println("Total loans: " + loans.size());
         System.out.println("Total Book Loans: " + bookLoansCount);
         System.out.println("Total Multimedia Loans: " + multimediaLoansCount);
         System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/loans.size()*100 + "%");
     }
 }
+
+

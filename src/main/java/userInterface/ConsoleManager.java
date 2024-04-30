@@ -29,12 +29,10 @@ public class ConsoleManager {
         System.out.println("2. Return a loan");
         System.out.println("3. Renew a loan");
         System.out.println("4. Look up an item");
-        System.out.println("5. Display loans on a user");
-        System.out.println("6. Display all loans");
+        System.out.println("5. Display all loans");
+        System.out.println("6. Display loans on a user");
         System.out.println("7. Display all users");
-        System.out.println("8. Display a history of returned loans");
-        System.out.println("9. Quit without saving");
-        System.out.println("10. Save and Quit");
+        System.out.println("8. Save and Quit");
         System.out.print("> ");
     }
 }

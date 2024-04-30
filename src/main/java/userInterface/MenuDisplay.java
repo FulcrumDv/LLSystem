@@ -69,32 +69,21 @@ public class MenuDisplay {
                     running = menuService.askUserToContinue();
                     break;
                 case 5:
+                    menuService.displayAllLoansSelection();
+                    running = menuService.askUserToContinue();
+                    break;
+                case 6:
                     menuService.displayLoansOnUserSelection();
                     System.out.println("Would you like to display loans of another user? (Y/N): ");
                     String displayAnotherUser = input.next();
                     if (displayAnotherUser.equals("Y") || displayAnotherUser.equals("y")) {
                         menuService.displayLoansOnUserSelection();
                     }
-
-                    ConsoleManager.clearConsole();
-                    break;
-                case 6:
-                    menuService.displayAllLoansSelection();
-                    running = menuService.askUserToContinue();
-                    break;
                 case 7:
                     menuService.displayAllUsersSelection();
                     running = menuService.askUserToContinue();
                     break;
                 case 8:
-                    menuService.displayHistoryLoansSelection();
-                    running = menuService.askUserToContinue();
-                    break;
-                case 9:
-                    menuService.quitWithoutSavingSelection();
-                    running = false;
-                    break;
-                case 10:
                     menuService.saveAndQuit();
                     running = false;
                     break;

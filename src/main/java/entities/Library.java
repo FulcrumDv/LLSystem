@@ -215,18 +215,38 @@ public class Library {
     // Get all items that are currently on loan
     public void displayAllLoans(){
         try{
+            ReadCSV readCSV = new ReadCSV();
+            List<Loans> allLoans = readCSV.readLoans("src/main/resources/LOANS.csv");
+
             System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
             System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
-            for (Loans loan : loans){
-                System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
-                        loan.getBarcode(),
-                        loan.getUserID(),
-                        loan.getTitle(),
-                        loan.getMediaType(),
-                        loan.getLoanDate(),
-                        loan.getDueDate(),
-                        loan.getNumberOfRenews());
+            if (!loans.isEmpty()) {
+                for (Loans loan : loans) {
+                    System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
+                            loan.getBarcode(),
+                            loan.getUserID(),
+                            loan.getTitle(),
+                            loan.getMediaType(),
+                            loan.getLoanDate(),
+                            loan.getDueDate(),
+                            loan.getNumberOfRenews());
+                }
             }
+
+            if (!allLoans.isEmpty()){
+                for (Loans loan : allLoans){
+                    System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
+                            loan.getBarcode(),
+                            loan.getUserID(),
+                            loan.getTitle(),
+                            loan.getMediaType(),
+                            loan.getLoanDate(),
+                            loan.getDueDate(),
+                            loan.getNumberOfRenews());
+                }
+            }
+
+
         }catch (Exception e){
             logger.warning("Error displaying all loans: " + e);
         }
@@ -248,32 +268,20 @@ public class Library {
         }
     }
 
-    public void displayHistoryOfReturnedLoans(){
-        try{
-            System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Date returned", "Number of renews");
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
-            for (Loans loan : returnedLoans){
-                System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s %-15s\n",
-                        loan.getBarcode(),
-                        loan.getUserID(),
-                        loan.getTitle(),
-                        loan.getMediaType(),
-                        loan.getLoanDate(),
-                        loan.getDueDate(),
-                        loan.getDateReturned(),
-                        loan.getNumberOfRenews());
-            }
-        }catch (Exception e){
-            logger.warning("Error displaying all loans: " + e);
-        }
-    }
-
     public void LoanStatistics(){
+        ReadCSV readCSV = new ReadCSV();
+        List<Loans> allLoans = readCSV.readLoans("src/main/resources/LOANS.csv");
+
+        // for displaying stats of loans combining both lists is needed
+        List<Loans> combinedLoans = new ArrayList<>();
+        combinedLoans.addAll(allLoans);
+        combinedLoans.addAll(loans);
+
         int bookLoansCount = 0;
         int multimediaLoansCount = 0;
         int renewedLoansCount = 0;
         // counts number of loans for books and multimedia
-        for (Loans loan : loans){
+        for (Loans loan : combinedLoans){
             if (searchForItem(loan.getBarcode()) instanceof Books){
                 bookLoansCount++;
             }else if (searchForItem(loan.getBarcode()) instanceof Multimedia){
@@ -288,10 +296,10 @@ public class Library {
         // Displaying stats of loans
         System.out.println("            "+this.libraryName);
         System.out.println("------------------------------------------------------\n");
-        System.out.println("Total loans: " + loans.size());
+        System.out.println("Total loans: " + combinedLoans.size());
         System.out.println("Total Book Loans: " + bookLoansCount);
         System.out.println("Total Multimedia Loans: " + multimediaLoansCount);
-        System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/loans.size()*100 + "%");
+        System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/combinedLoans.size()*100 + "%");
     }
 }
 

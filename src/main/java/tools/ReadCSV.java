@@ -1,11 +1,14 @@
 package tools;
 import entities.LibraryItems;
+import entities.Users;
+import entities.Loans;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Logger;
+import java.time.LocalDate;
 
 import entities.Users;
 
@@ -68,6 +71,28 @@ public class ReadCSV {
         }
 
         return users;
+    }
+
+    // Reads loans.CSV file and returns a list of Loans
+    public List<Loans> readLoans(String filepath){
+        List<Loans> loans = new ArrayList<>();
+        try{
+            FileReader fr = new FileReader(filepath);
+            BufferedReader br = new BufferedReader(fr);
+            br.readLine();
+            String line;
+            while((line = br.readLine()) != null){
+                String[] tempArray = line.split(delimiter);
+                // 4 and 5th index are LocalDate types so parsing is needed
+                LocalDate loanDate = LocalDate.parse(tempArray[4]);
+                LocalDate dueDate = LocalDate.parse(tempArray[5]);
+                loans.add(new Loans(tempArray[0], tempArray[1], tempArray[2], tempArray[3], loanDate, dueDate));
+            }
+        }catch (IOException e){
+            logger.warning("Error reading file: " + e);
+        }
+
+        return loans;
     }
 
 

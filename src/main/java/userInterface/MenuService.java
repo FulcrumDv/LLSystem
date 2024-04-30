@@ -19,11 +19,12 @@ public class MenuService {
      */
 
     public boolean askUserToContinue() {
+        WriteCSV writeCSV = new WriteCSV();
         Scanner input = new Scanner(System.in);
         System.out.println("\nDo you want to make another selection? (Y/N): ");
         String programContinue = input.next();
         if (Objects.equals(programContinue, "N") || Objects.equals(programContinue, "n")) {
-
+            writeCSV.writeLoans("src/main/resources/LOANS.csv", library.getLoans());
             System.out.println("Thank you!. Goodbye!");
             return false;
         }
@@ -103,10 +104,10 @@ public class MenuService {
 
     // 6. Display all loans
     public void displayAllLoansSelection(){
-        System.out.print("Do you want to display all loans (Y/N): ");
-        String displayAllAnswer = input.next();
-        if (displayAllAnswer.equals("Y") || displayAllAnswer.equals("y")){
-            library.displayAllLoans();
+        library.displayAllLoans();
+
+        if (!library.getLoans().isEmpty()){
+            System.out.println("Some loans have not been saved yet, would you like to save them? (Y/N): ");
         }
 
         System.out.print("\n\nDisplay Loan Statistics? (Y/N): ");
@@ -125,26 +126,8 @@ public class MenuService {
             library.displayAllUsers();
         }
     }
-    // 8. Display a history of returned loans
-    public void displayHistoryLoansSelection(){
-        System.out.println("Do you want to display a history of returned loans? (Y/N): ");
-        String displayHistoryAnswer = input.next();
-        if (displayHistoryAnswer.equals("Y") || displayHistoryAnswer.equals("y")){
-            library.displayHistoryOfReturnedLoans();
-        }
-    }
 
-
-    // 9. Quit without saving
-    public void quitWithoutSavingSelection() {
-        System.out.print("Are you sure you want to quit without saving? (Y/N): ");
-        String quitAnswer = input.next();
-        if (quitAnswer.equals("Y") || quitAnswer.equals("y")) {
-            System.out.println("No changes made. Goodbye!");
-        }
-    }
-
-    // 10. Save and quit
+    // 8. Save and quit
     public void saveAndQuit() {
         WriteCSV writeCSV = new WriteCSV();
 

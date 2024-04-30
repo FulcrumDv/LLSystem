@@ -43,7 +43,10 @@ public class Library {
         return loans;
     }
 
+
     // Methods for managing the library System
+
+    // Searches for an item in the items list by barcode and returns the item
     public LibraryItems searchForItem(String barcode) {
         // Using a for-each loop for readability
         try {

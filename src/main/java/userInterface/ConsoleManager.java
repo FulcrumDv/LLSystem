@@ -1,6 +1,6 @@
 package userInterface;
 
-public class ConsoleManager {
+class ConsoleManager {
     public static void clearConsole(){
         System.out.println("\r\n".repeat(50));
     }
@@ -28,7 +28,7 @@ public class ConsoleManager {
         System.out.println("1. Issue a loan");
         System.out.println("2. Return a loan");
         System.out.println("3. Renew a loan");
-        System.out.println("4. Look up an item");
+        System.out.println("4. Look up a item");
         System.out.println("5. Display all loans");
         System.out.println("6. Display loans on a user");
         System.out.println("7. Display all users");

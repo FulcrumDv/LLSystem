@@ -3,16 +3,16 @@ import java.time.LocalDate;
 
 //This class describes structure for a loan object in the library
 public class Loans {
-    String barcode;
-    String userID;
-    String title;
-    String mediaType;
+    private final String barcode;
+    private final String userID;
+    private final String title;
+    private final String mediaType;
     // Local date allows the program to get the current data and time which can be used to calculate the due date
-    LocalDate loanDate;
-    LocalDate dueDate;
-    int numberOfRenews;
-    boolean isRenewable;
-    LocalDate dateReturned;
+    private final LocalDate loanDate;
+    private LocalDate dueDate;
+    private int numberOfRenews;
+    private boolean isRenewable;
+    private LocalDate dateReturned;
 
     public Loans(String barcode, String userID, String title, String mediaType, LocalDate loanDate, LocalDate dueDate){
         this.barcode = barcode;

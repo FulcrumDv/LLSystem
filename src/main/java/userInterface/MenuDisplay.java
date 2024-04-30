@@ -1,7 +1,7 @@
 package userInterface;
 import java.util.Scanner;
 
-public class MenuDisplay {
+class MenuDisplay {
     private final MenuService menuService;
 
     public MenuDisplay() {

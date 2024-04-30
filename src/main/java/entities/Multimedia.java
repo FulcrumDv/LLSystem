@@ -32,10 +32,10 @@ public class Multimedia extends LibraryItems {
         return this.artist;
     }
 
-    // Implemention of overriden book specific methods
+    // Implementation of overriden book specific methods
     @Override
     public void loanItem(String userID, String barcode) {
-        super.loanItem(userID, barcode);
+        super.notLendable(userID, barcode);
         super.setLoanPeriod(loanPeriod);
     }
 

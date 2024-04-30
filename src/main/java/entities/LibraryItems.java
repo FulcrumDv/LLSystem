@@ -63,7 +63,7 @@ public abstract class LibraryItems implements LendableItem {
         this.isLendable = true;
     }
 
-    public void loanItem(String userID, String barcode){
+    public void notLendable(String userID, String barcode){
         this.isLendable = false;
     }
 

@@ -34,7 +34,7 @@ public class Books extends LibraryItems{
 
     @Override
     public void loanItem(String userID, String barcode) {
-        super.loanItem(userID, barcode);
+        super.notLendable(userID, barcode);
         super.setLoanPeriod(loanPeriod);
     }
 

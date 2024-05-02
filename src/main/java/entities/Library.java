@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.time.LocalDate;
 import tools.ReadCSV;
-import tools.WriteCSV;
 
 import java.util.Iterator;
 
@@ -24,7 +23,6 @@ public class Library {
     private final List<Loans> loans;
     private final List<LibraryItems> items;
     // This is my way of keeping a history when a loan is returned
-    private final List<Loans> returnedLoans;
     private final List<Loans> allLoansOfUser;
     private final String libraryName = "Ulster University Library";
 
@@ -32,7 +30,6 @@ public class Library {
     public Library(String ItemFilePath, String UserFilePath) {
         this.users = new ArrayList<>();
         this.loans = new ArrayList<>();
-        this.returnedLoans = new ArrayList<>();
         this.items = new ArrayList<>();
         this.allLoansOfUser = new ArrayList<>();
 
@@ -45,9 +42,7 @@ public class Library {
     public List<Loans> getLoans(){
         return loans;
     }
-    public void addLoan(Loans loan) {
-        this.loans.add(loan);
-    }
+
 
     // Methods for managing the library System
 
@@ -133,7 +128,6 @@ public class Library {
             while(iterator.hasNext()) {
                 Loans loan = iterator.next();
                 if (loan.getBarcode().equals(barcode)) {
-                    returnedLoans.add(loan);
                     iterator.remove();
                     // Adds that loan to returned loans allowing there to be history/log of all loans
 

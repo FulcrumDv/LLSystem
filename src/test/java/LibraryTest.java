@@ -1,10 +1,14 @@
+import entities.Books;
+import entities.Multimedia;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import entities.Library;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class LibraryTest {
+
+    // Testing loanItem, renewItem, returnItem, renewLoanLimit, checkUserExists, searchForItem
     @Test
     void testLoanItem() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
@@ -63,7 +67,26 @@ public class LibraryTest {
     }
 
     @Test
+    void testRenewLoanLimitOnBook(){
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertTrue(library.loanItem("25832497", "B00447489"));
+        for (int i = 0; i < Books.getRenewLimit(); i++){
+            assertTrue(library.renewLoan("25832497"));
+        }
+        assertFalse(library.renewLoan("25832497"));
+    }
 
+    @Test
+    void testRenewLoanLimitOnMultimedia(){
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertTrue(library.loanItem("382471060", "B00187440"));
+        for (int i = 0; i < Multimedia.getRenewLimit(); i++){
+            assertTrue(library.renewLoan("382471060"));
+        }
+        assertFalse(library.renewLoan("382471060"));
+    }
+
+    @Test
     void testCheckUserExists(){
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.checkUserExists("B00447489"));
@@ -73,6 +96,36 @@ public class LibraryTest {
     void testSearchforItem(){
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertEquals("25832497", library.searchForItem("25832497").getBarcode());
+    }
+
+    // Testing invalid barcodes and user IDs
+    @Test
+    void testLoanItemWithInvalidBarcode() {
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertFalse(library.loanItem("000000", "B00447489"));
+    }
+
+    @Test
+    void testRenewItemWithInvalidBarcode() {
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertFalse(library.renewLoan("000000"));
+    }
+
+    @Test
+    void testReturnItemWithInvalidBarcode() {
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertFalse(library.returnLoan("00000000"));
+    }
+    @Test
+    void testCheckUserExistsWithInvalidUserID(){
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertFalse(library.checkUserExists("912111111"));
+    }
+
+    @Test
+    void testSearchForItemWithInvalidBarcode(){
+        Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
+        assertNull(library.searchForItem("00000000"));
     }
 
 

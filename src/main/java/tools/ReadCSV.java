@@ -95,19 +95,6 @@ public class ReadCSV {
         return loans;
     }
 
-    // Reads file and checks if empty
-    public boolean isCSVEmpty(String filepath){
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(filepath));
-            if(br.readLine() == null){
-                return true;
-            }
-        }catch (IOException e){
-            logger.warning("Error reading file: " + e);
-        }
-        return false;
-    }
-
 
 
 

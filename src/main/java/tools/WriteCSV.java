@@ -33,27 +33,5 @@ public class WriteCSV {
             logger.warning("Error writing to file: " + e);
         }
     }
-
-    public void appendToLoans(String filepath, Loans loan){
-        try (FileWriter outputFile = new FileWriter(filepath, true)){
-            outputFile.append(loan.getBarcode());
-            outputFile.append(",");
-            outputFile.append(loan.getUserID());
-            outputFile.append(",");
-            outputFile.append(loan.getTitle());
-            outputFile.append(",");
-            outputFile.append(loan.getMediaType());
-            outputFile.append(",");
-            outputFile.append(String.valueOf(loan.getLoanDate()));
-            outputFile.append(",");
-            outputFile.append(String.valueOf(loan.getDueDate()));
-            outputFile.append(",");
-            outputFile.append(String.valueOf(loan.getNumberOfRenews()));
-            outputFile.append("\n");
-        }catch (IOException e){
-            logger.warning("Error writing to file: " + e);
-        }
     }
-
-}
 

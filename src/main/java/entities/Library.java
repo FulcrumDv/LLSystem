@@ -178,7 +178,7 @@ public class Library {
                             loan.incrementNumberOfRenews();
                             return true;
                         }else{
-                            System.out.println("Number of renews exceeded! Book needs to be returned!");
+                            System.out.println("Number of renews exceeded! Multimedia needs to be returned!");
                             loan.setIsRenewable(false);
                             return false;
                         }

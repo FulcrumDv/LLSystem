@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.time.LocalDate;
 import tools.ReadCSV;
+import tools.WriteCSV;
+
 import java.util.Iterator;
 
 /* This class holds the necessary functions to manage the users and loans of the library
@@ -37,12 +39,15 @@ public class Library {
         ReadCSV readCSV = new ReadCSV();
         this.items.addAll(readCSV.readItems(ItemFilePath));
         this.users.addAll(readCSV.readUsers(UserFilePath));
+        this.loans.addAll(readCSV.readLoans("src/main/resources/LOANS.csv"));
     }
 
     public List<Loans> getLoans(){
         return loans;
     }
-
+    public void addLoan(Loans loan) {
+        this.loans.add(loan);
+    }
 
     // Methods for managing the library System
 
@@ -88,6 +93,10 @@ public class Library {
         boolean loanSuccess = false;
         try {
             LibraryItems item = searchForItem(barcode);
+            if (item == null) {
+                return false;
+            }
+
             if (checkUserExists(userID)) {
                 if (item.isLendable(barcode)) {
                     // Sets loanDate to current date and dueDate to loanDate + loanPeriod
@@ -165,6 +174,7 @@ public class Library {
                         }else{
                             System.out.println("Number of renews exceeded! Book needs to be returned!");
                             loan.setIsRenewable(false);
+                            return false;
                         }
 
                         // For readability, using else if to show that the item is a multimedia
@@ -176,6 +186,7 @@ public class Library {
                         }else{
                             System.out.println("Number of renews exceeded! Book needs to be returned!");
                             loan.setIsRenewable(false);
+                            return false;
                         }
                     }
                 }else{
@@ -189,7 +200,7 @@ public class Library {
     }
 
     // Get all loans of a specific user
-    public void userLoans(String userID){
+    public List<Loans> userLoans(String userID){
         // First gets user id corresponding to the loan and adds to allLoansOfUser ArrayList
         try {
             for (Loans loan : loans) {
@@ -213,14 +224,12 @@ public class Library {
         }catch(Exception e){
             logger.warning("Error displaying current loans: " + e);
         }
+        return allLoansOfUser;
     }
 
     // Get all items that are currently on loan
     public void displayAllLoans(){
         try{
-            ReadCSV readCSV = new ReadCSV();
-            List<Loans> allLoans = readCSV.readLoans("src/main/resources/LOANS.csv");
-
             System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
             System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
             if (!loans.isEmpty()) {
@@ -235,21 +244,6 @@ public class Library {
                             loan.getNumberOfRenews());
                 }
             }
-
-            if (!allLoans.isEmpty()){
-                for (Loans loan : allLoans){
-                    System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
-                            loan.getBarcode(),
-                            loan.getUserID(),
-                            loan.getTitle(),
-                            loan.getMediaType(),
-                            loan.getLoanDate(),
-                            loan.getDueDate(),
-                            loan.getNumberOfRenews());
-                }
-            }
-
-
         }catch (Exception e){
             logger.warning("Error displaying all loans: " + e);
         }
@@ -272,19 +266,12 @@ public class Library {
     }
 
     public void LoanStatistics(){
-        ReadCSV readCSV = new ReadCSV();
-        List<Loans> allLoans = readCSV.readLoans("src/main/resources/LOANS.csv");
-
         // for displaying stats of loans combining both lists is needed
-        List<Loans> combinedLoans = new ArrayList<>();
-        combinedLoans.addAll(allLoans);
-        combinedLoans.addAll(loans);
-
         int bookLoansCount = 0;
         int multimediaLoansCount = 0;
         int renewedLoansCount = 0;
         // counts number of loans for books and multimedia
-        for (Loans loan : combinedLoans){
+        for (Loans loan : loans){
             if (searchForItem(loan.getBarcode()) instanceof Books){
                 bookLoansCount++;
             }else if (searchForItem(loan.getBarcode()) instanceof Multimedia){
@@ -299,10 +286,10 @@ public class Library {
         // Displaying stats of loans
         System.out.println("            "+this.libraryName);
         System.out.println("------------------------------------------------------\n");
-        System.out.println("Total loans: " + combinedLoans.size());
+        System.out.println("Total loans: " + loans.size());
         System.out.println("Total Book Loans: " + bookLoansCount);
         System.out.println("Total Multimedia Loans: " + multimediaLoansCount);
-        System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/combinedLoans.size()*100 + "%");
+        System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/loans.size()*100 + "%");
     }
 }
 

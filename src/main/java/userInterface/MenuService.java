@@ -8,27 +8,17 @@ import tools.WriteCSV;
 import entities.Loans;
 import java.util.List;
 
-class MenuService {
+public class MenuService {
 
     private final Library library;
-
+    ReadCSV readCSV = new ReadCSV();
+    WriteCSV writeCSV = new WriteCSV();
     public MenuService() {
         this.library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
     }
 
-    // Method to check if file should be overwritten or appended
-    public void checkIfFileEmpty(String filepath, List<Loans> loans) {
-        ReadCSV readCSV = new ReadCSV();
-        WriteCSV writeCSV = new WriteCSV();
-        if (readCSV.isCSVEmpty(filepath)) {
-            writeCSV.writeLoans(filepath, loans);
-        } else {
-            for (Loans loan : loans) {
-                writeCSV.appendToLoans(filepath, loan);
-            }
-        }
-    }
 
+    // Method to check if file should be overwritten or appended
     Scanner input = new Scanner(System.in);
     /* ask user if they want to continue after choosing an option
        and calls clearConsole if that answer is yes
@@ -40,7 +30,7 @@ class MenuService {
         System.out.println("\nDo you want to make another selection? (Y/N): ");
         String programContinue = input.next();
         if (Objects.equals(programContinue, "N") || Objects.equals(programContinue, "n")) {
-            checkIfFileEmpty("src/main/resources/LOANS.csv", library.getLoans());
+            writeCSV.writeLoans("src/main/resources/LOANS.csv", library.getLoans());
             library.getLoans().clear();
             return false;
         }
@@ -86,7 +76,6 @@ class MenuService {
             if (library.renewLoan(barcodeForRenew)) {
                 System.out.println("Loan renewed successfully!");
             }
-
         }
     }
 
@@ -124,19 +113,6 @@ class MenuService {
         // Call the displayAllLoans method from the Library class
         library.displayAllLoans();
 
-        // Check if there are any loans that have not been saved yet
-        if (!library.getLoans().isEmpty()) {
-            System.out.println("Some loans have not been saved yet, would you like to save them? (Y/N): ");
-            String saveAnswer = input.next();
-            if (saveAnswer.equals("Y") || saveAnswer.equals("y")) {
-                checkIfFileEmpty("src/main/resources/LOANS.csv", library.getLoans());
-                System.out.println("Loans saved successfully!");
-            }else {
-                System.out.println("Loans not saved.");
-            }
-
-            library.getLoans().clear();
-        }
 
         // Asks the user if they want to display loan statistics
         System.out.print("\n\nDisplay Loan Statistics? (Y/N): ");
@@ -162,7 +138,7 @@ class MenuService {
         String saveAnswer = input.next();
         if (saveAnswer.equals("Y") || saveAnswer.equals("y")) {
             System.out.println("Saving changes...");
-            checkIfFileEmpty("src/main/resources/LOANS.csv", library.getLoans());
+            writeCSV.writeLoans("src/main/resources/LOANS.csv", library.getLoans());
             System.out.println("Changes saved. Goodbye!");
         }
     }

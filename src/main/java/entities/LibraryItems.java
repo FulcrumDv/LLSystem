@@ -58,6 +58,7 @@ public abstract class LibraryItems implements LendableItem {
         return this.isLendable;
     }
 
+
     public void returnItem(String barcode){
         // The logic is that if item is returned its now lendable
         this.isLendable = true;

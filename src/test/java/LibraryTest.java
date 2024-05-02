@@ -22,22 +22,22 @@ public class LibraryTest {
     void testRenewItem() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.loanItem("25832497", "B00447489"));
-        if(library.searchForItem("25832497").isLendable("25832497")) {
+        if (library.searchForItem("25832497").isLendable("25832497")) {
             assertTrue(library.renewLoan("25832497"));
         }
 
         assertTrue(library.loanItem("240453126", "B00187440"));
-        if(library.searchForItem("240453126").isLendable("240453126")) {
+        if (library.searchForItem("240453126").isLendable("240453126")) {
             assertTrue(library.renewLoan("240453126"));
         }
 
         assertTrue(library.loanItem("813844363", "B00986808"));
-        if(library.searchForItem("813844363").isLendable("813844363")) {
+        if (library.searchForItem("813844363").isLendable("813844363")) {
             assertTrue(library.renewLoan("813844363"));
         }
 
         assertTrue(library.loanItem("530038220", "B00000464"));
-        if(library.searchForItem("530038220").isLendable("530038220")) {
+        if (library.searchForItem("530038220").isLendable("530038220")) {
             assertTrue(library.renewLoan("530038220"));
         }
     }
@@ -46,54 +46,54 @@ public class LibraryTest {
     void testReturnItem() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.loanItem("25832497", "B00447489"));
-        if(library.searchForItem("25832497").isLendable("25832497")) {
+        if (library.searchForItem("25832497").isLendable("25832497")) {
             assertTrue(library.returnLoan("25832497"));
         }
 
         assertTrue(library.loanItem("240453126", "B00187440"));
-        if(library.searchForItem("240453126").isLendable("240453126")) {
+        if (library.searchForItem("240453126").isLendable("240453126")) {
             assertTrue(library.returnLoan("240453126"));
         }
 
         assertTrue(library.loanItem("813844363", "B00986808"));
-        if(library.searchForItem("813844363").isLendable("813844363")) {
+        if (library.searchForItem("813844363").isLendable("813844363")) {
             assertTrue(library.returnLoan("813844363"));
         }
 
         assertTrue(library.loanItem("530038220", "B00000464"));
-        if(library.searchForItem("530038220").isLendable("530038220")) {
+        if (library.searchForItem("530038220").isLendable("530038220")) {
             assertTrue(library.returnLoan("530038220"));
         }
     }
 
     @Test
-    void testRenewLoanLimitOnBook(){
+    void testRenewLoanLimitOnBook() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.loanItem("25832497", "B00447489"));
-        for (int i = 0; i < Books.getRenewLimit(); i++){
+        for (int i = 0; i < Books.getRenewLimit(); i++) {
             assertTrue(library.renewLoan("25832497"));
         }
         assertFalse(library.renewLoan("25832497"));
     }
 
     @Test
-    void testRenewLoanLimitOnMultimedia(){
+    void testRenewLoanLimitOnMultimedia() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.loanItem("382471060", "B00187440"));
-        for (int i = 0; i < Multimedia.getRenewLimit(); i++){
+        for (int i = 0; i < Multimedia.getRenewLimit(); i++) {
             assertTrue(library.renewLoan("382471060"));
         }
         assertFalse(library.renewLoan("382471060"));
     }
 
     @Test
-    void testCheckUserExists(){
+    void testCheckUserExists() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertTrue(library.checkUserExists("B00447489"));
     }
 
     @Test
-    void testSearchforItem(){
+    void testSearchforItem() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertEquals("25832497", library.searchForItem("25832497").getBarcode());
     }
@@ -116,14 +116,15 @@ public class LibraryTest {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertFalse(library.returnLoan("00000000"));
     }
+
     @Test
-    void testCheckUserExistsWithInvalidUserID(){
+    void testCheckUserExistsWithInvalidUserID() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertFalse(library.checkUserExists("912111111"));
     }
 
     @Test
-    void testSearchForItemWithInvalidBarcode(){
+    void testSearchForItemWithInvalidBarcode() {
         Library library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
         assertNull(library.searchForItem("00000000"));
     }

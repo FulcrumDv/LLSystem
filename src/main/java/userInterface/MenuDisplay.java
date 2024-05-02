@@ -1,4 +1,5 @@
 package userInterface;
+
 import java.util.Scanner;
 
 class MenuDisplay {

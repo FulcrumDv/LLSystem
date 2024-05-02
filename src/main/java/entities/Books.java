@@ -1,7 +1,7 @@
 package entities;
 
 // Books is a subclass of LibraryItems and Inherits the properties of LibraryItems
-public class Books extends LibraryItems{
+public class Books extends LibraryItems {
 
     private final String author;
     // renewLimit is const, so will not change
@@ -9,26 +9,26 @@ public class Books extends LibraryItems{
     private final int loanPeriod = 30;
     private static final int renewPeriod = 14;
 
-    public Books(String barcode, String author, String title, String mediaType, String year, String isbn){
+    public Books(String barcode, String author, String title, String mediaType, String year, String isbn) {
         super(barcode, title, mediaType, year, isbn);
         this.author = author;
     }
 
-    public static int getRenewLimit(){
+    public static int getRenewLimit() {
         return renewLimit;
     }
 
-    public static int getRenewPeriod(){
+    public static int getRenewPeriod() {
         return renewPeriod;
     }
 
 
-    public int getLoanPeriod(){
+    public int getLoanPeriod() {
         return loanPeriod;
     }
 
     @Override
-    public String getCreator(){
+    public String getCreator() {
         return this.author;
     }
 
@@ -39,7 +39,7 @@ public class Books extends LibraryItems{
     }
 
     @Override
-    public void returnItem(String barcode){
+    public void returnItem(String barcode) {
         super.returnItem(barcode);
     }
 

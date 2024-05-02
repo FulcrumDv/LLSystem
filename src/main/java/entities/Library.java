@@ -1,8 +1,10 @@
 package entities;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.time.LocalDate;
+
 import tools.ReadCSV;
 
 import java.util.Iterator;
@@ -39,7 +41,7 @@ public class Library {
         this.loans.addAll(readCSV.readLoans("src/main/resources/LOANS.csv"));
     }
 
-    public List<Loans> getLoans(){
+    public List<Loans> getLoans() {
         return loans;
     }
 
@@ -125,7 +127,7 @@ public class Library {
     public boolean returnLoan(String barcode) {
         try {
             Iterator<Loans> iterator = loans.iterator();
-            while(iterator.hasNext()) {
+            while (iterator.hasNext()) {
                 Loans loan = iterator.next();
                 if (loan.getBarcode().equals(barcode)) {
                     iterator.remove();
@@ -154,47 +156,47 @@ public class Library {
     }
 
     // Renewing a loan
-    public boolean renewLoan(String barcode){
-        try{
-            for (Loans loan : loans){
-                if (loan.getBarcode().equals(barcode)){
+    public boolean renewLoan(String barcode) {
+        try {
+            for (Loans loan : loans) {
+                if (loan.getBarcode().equals(barcode)) {
                     // find item to so that the type instance of the object can be determined
-                    if (searchForItem(barcode) instanceof Books){
+                    if (searchForItem(barcode) instanceof Books) {
                         // If no. of renews is less than
-                        if (loan.getNumberOfRenews() < Books.getRenewLimit()){
+                        if (loan.getNumberOfRenews() < Books.getRenewLimit()) {
                             loan.setDueDate(loan.getDueDate().plusDays(Books.getRenewPeriod()));
                             loan.incrementNumberOfRenews();
                             return true;
-                        }else{
+                        } else {
                             System.out.println("Number of renews exceeded! Book needs to be returned!");
                             loan.setIsRenewable(false);
                             return false;
                         }
 
                         // For readability, using else if to show that the item is a multimedia
-                    }else if (searchForItem(barcode) instanceof Multimedia){
-                        if (loan.getNumberOfRenews() < Multimedia.getRenewLimit()){
+                    } else if (searchForItem(barcode) instanceof Multimedia) {
+                        if (loan.getNumberOfRenews() < Multimedia.getRenewLimit()) {
                             loan.setDueDate(loan.getDueDate().plusDays(Multimedia.getRenewPeriod()));
                             loan.incrementNumberOfRenews();
                             return true;
-                        }else{
+                        } else {
                             System.out.println("Number of renews exceeded! Multimedia needs to be returned!");
                             loan.setIsRenewable(false);
                             return false;
                         }
                     }
-                }else{
+                } else {
                     System.out.println("Cannot renew loan! Loan not found!");
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.warning("Error renewing loan: " + e);
         }
         return false;
     }
 
     // Get all loans of a specific user
-    public List<Loans> userLoans(String userID){
+    public List<Loans> userLoans(String userID) {
         // First gets user id corresponding to the loan and adds to allLoansOfUser ArrayList
         try {
             for (Loans loan : loans) {
@@ -203,7 +205,8 @@ public class Library {
                 }
             }
             // Displaying the current Loans
-            System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
+            System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type",
+                    "Loan Date", "Due Date", "Number of renews"); // on two lines so its easily read
             System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------------");
             for (Loans loan : allLoansOfUser) {
                 System.out.printf("%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n",
@@ -215,16 +218,17 @@ public class Library {
                         loan.getDueDate(),
                         loan.getNumberOfRenews());
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.warning("Error displaying current loans: " + e);
         }
         return allLoansOfUser;
     }
 
     // Get all items that are currently on loan
-    public void displayAllLoans(){
-        try{
-            System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title", "Media Type", "Loan Date", "Due Date", "Number of renews");
+    public void displayAllLoans() {
+        try {
+            System.out.printf("\n%-15s %-15s %-35s %-15s %-15s %-15s %-15s\n", "Barcode", "User ID", "Title",
+                    "Media Type", "Loan Date", "Due Date", "Number of renews"); // on two lines so its easily read
             System.out.println("----------------------------------------------------------------------------------------------------------------------------------------------");
             if (!loans.isEmpty()) {
                 for (Loans loan : loans) {
@@ -238,52 +242,52 @@ public class Library {
                             loan.getNumberOfRenews());
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.warning("Error displaying all loans: " + e);
         }
     }
 
-    public void displayAllUsers(){
-        try{
+    public void displayAllUsers() {
+        try {
             System.out.printf("%-15s %-15s %-15s %-15s\n", "User ID", "First Name", "Last Name", "Email");
             System.out.println("-----------------------------------------------------------------------------------------------------");
-            for (Users user : users){
+            for (Users user : users) {
                 System.out.printf("%-15s %-15s %-15s %-15s\n",
                         user.getUserID(),
                         user.getFirstName(),
                         user.getLastName(),
                         user.getEmail());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.warning("Error displaying all users: " + e);
         }
     }
 
-    public void LoanStatistics(){
+    public void LoanStatistics() {
         // for displaying stats of loans combining both lists is needed
         int bookLoansCount = 0;
         int multimediaLoansCount = 0;
         int renewedLoansCount = 0;
         // counts number of loans for books and multimedia
-        for (Loans loan : loans){
-            if (searchForItem(loan.getBarcode()) instanceof Books){
+        for (Loans loan : loans) {
+            if (searchForItem(loan.getBarcode()) instanceof Books) {
                 bookLoansCount++;
-            }else if (searchForItem(loan.getBarcode()) instanceof Multimedia){
+            } else if (searchForItem(loan.getBarcode()) instanceof Multimedia) {
                 multimediaLoansCount++;
             }
 
             // counts number of loans that have been renewed more than once
-            if (loan.getNumberOfRenews() > 1){
+            if (loan.getNumberOfRenews() > 1) {
                 renewedLoansCount++;
             }
         }
         // Displaying stats of loans
-        System.out.println("            "+this.libraryName);
+        System.out.println("            " + this.libraryName);
         System.out.println("------------------------------------------------------\n");
         System.out.println("Total loans: " + loans.size());
         System.out.println("Total Book Loans: " + bookLoansCount);
         System.out.println("Total Multimedia Loans: " + multimediaLoansCount);
-        System.out.println("Percentage of loans renewed more than once: " + (double)renewedLoansCount/loans.size()*100 + "%");
+        System.out.println("Percentage of loans renewed more than once: " + (double) renewedLoansCount / loans.size() * 100 + "%");
     }
 }
 

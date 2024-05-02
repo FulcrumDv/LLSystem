@@ -1,8 +1,10 @@
 package tools;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
+
 import entities.Loans;
 
 
@@ -10,10 +12,10 @@ public class WriteCSV {
 
     Logger logger = Logger.getLogger(WriteCSV.class.getName());
 
-    public void writeLoans(String filepath, List<Loans> loans){
-        try (FileWriter outputFile = new FileWriter(filepath)){
+    public void writeLoans(String filepath, List<Loans> loans) {
+        try (FileWriter outputFile = new FileWriter(filepath)) {
             outputFile.append("Barcode,UserID,Title,MediaType,LoanDate,DueDate,NumberOfRenews\n");
-            for(Loans loan : loans){
+            for (Loans loan : loans) {
                 outputFile.append(loan.getBarcode());
                 outputFile.append(",");
                 outputFile.append(loan.getUserID());
@@ -29,9 +31,9 @@ public class WriteCSV {
                 outputFile.append(String.valueOf(loan.getNumberOfRenews()));
                 outputFile.append("\n");
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Error writing to file: " + e);
         }
     }
-    }
+}
 

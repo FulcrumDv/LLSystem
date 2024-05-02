@@ -14,16 +14,16 @@ public class Multimedia extends LibraryItems {
     }
 
     // Getter
-    public static int getRenewLimit(){
+    public static int getRenewLimit() {
         return renewLimit;
     }
 
-    public static int getRenewPeriod(){
+    public static int getRenewPeriod() {
         return renewPeriod;
     }
 
 
-    public int getLoanPeriod(){
+    public int getLoanPeriod() {
         return loanPeriod;
     }
 

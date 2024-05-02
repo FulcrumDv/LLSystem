@@ -1,4 +1,5 @@
 package tools;
+
 import entities.LibraryItems;
 import entities.Users;
 import entities.Loans;
@@ -9,8 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.logging.Logger;
 import java.time.LocalDate;
-
-import entities.Users;
 
 // Tasks
 /*
@@ -24,18 +23,19 @@ public class ReadCSV {
     Logger logger = Logger.getLogger(ReadCSV.class.getName());
 
     public static final String delimiter = ",";
+
     // Reads in the specified file and returns a list of LibraryItems
-    public List<LibraryItems> readItems(String filepath){
+    public List<LibraryItems> readItems(String filepath) {
         List<LibraryItems> items = new ArrayList<>();
-        try{
+        try {
             FileReader fr = new FileReader(filepath);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] tempArray = line.split(delimiter);
                 // Checking the media type to see if its book or multimedia
-                switch(tempArray[3]){
+                switch (tempArray[3]) {
                     case "Book":
                         items.add(new entities.Books(tempArray[0], tempArray[1], tempArray[2], tempArray[3], tempArray[4], tempArray[5]));
                         break;
@@ -47,7 +47,7 @@ public class ReadCSV {
                         break;
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Error reading file: " + e);
         }
 
@@ -55,18 +55,18 @@ public class ReadCSV {
     }
 
     // Reads in the specified file and returns a list of Users
-    public List<Users> readUsers(String filepath){
+    public List<Users> readUsers(String filepath) {
         List<Users> users = new ArrayList<>();
-        try{
+        try {
             FileReader fr = new FileReader(filepath);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] tempArray = line.split(delimiter);
                 users.add(new entities.Users(tempArray[0], tempArray[1], tempArray[2], tempArray[3]));
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Error reading file: " + e);
         }
 
@@ -74,28 +74,26 @@ public class ReadCSV {
     }
 
     // Reads loans.CSV file and returns a list of Loans
-    public List<Loans> readLoans(String filepath){
+    public List<Loans> readLoans(String filepath) {
         List<Loans> loans = new ArrayList<>();
-        try{
+        try {
             FileReader fr = new FileReader(filepath);
             BufferedReader br = new BufferedReader(fr);
             br.readLine();
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 String[] tempArray = line.split(delimiter);
                 // 4 and 5th index are LocalDate types so parsing is needed
                 LocalDate loanDate = LocalDate.parse(tempArray[4]);
                 LocalDate dueDate = LocalDate.parse(tempArray[5]);
                 loans.add(new Loans(tempArray[0], tempArray[1], tempArray[2], tempArray[3], loanDate, dueDate));
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             logger.warning("Error reading file: " + e);
         }
 
         return loans;
     }
-
-
 
 
 }

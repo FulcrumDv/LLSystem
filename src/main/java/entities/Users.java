@@ -9,26 +9,26 @@ public class Users {
 
     public Users(String userID, String firstName, String lastName, String email) {
         this.userID = userID;
-        this.firstName= firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
     }
 
     // Getters
 
-    public String getUserID(){
+    public String getUserID() {
         return this.userID;
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return this.lastName;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return this.email;
     }
 }

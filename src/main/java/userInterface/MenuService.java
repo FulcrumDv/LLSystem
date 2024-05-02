@@ -1,18 +1,16 @@
 package userInterface;
+
 import entities.Library;
 import java.util.Objects;
 import java.util.Scanner;
 import entities.LibraryItems;
-import tools.ReadCSV;
 import tools.WriteCSV;
-import entities.Loans;
-import java.util.List;
 
 public class MenuService {
 
     private final Library library;
-    ReadCSV readCSV = new ReadCSV();
     WriteCSV writeCSV = new WriteCSV();
+
     public MenuService() {
         this.library = new Library("src/main/resources/ITEMS.csv", "src/main/resources/USERS.csv");
     }
@@ -118,16 +116,16 @@ public class MenuService {
         System.out.print("\n\nDisplay Loan Statistics? (Y/N): ");
         String displayStatisticsAnswer = input.next();
         System.out.println();
-        if (displayStatisticsAnswer.equals("Y") || displayStatisticsAnswer.equals("y")){
+        if (displayStatisticsAnswer.equals("Y") || displayStatisticsAnswer.equals("y")) {
             library.LoanStatistics();
         }
     }
 
     // 7. Display all users
-    public void displayAllUsersSelection(){
+    public void displayAllUsersSelection() {
         System.out.print("Do you want to display all users (Y/N): ");
         String displayUsersAnswer = input.next();
-        if (displayUsersAnswer.equals("Y") || displayUsersAnswer.equals("y")){
+        if (displayUsersAnswer.equals("Y") || displayUsersAnswer.equals("y")) {
             library.displayAllUsers();
         }
     }

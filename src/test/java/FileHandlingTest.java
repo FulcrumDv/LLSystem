@@ -3,11 +3,16 @@ import org.junit.jupiter.api.Test;
 import tools.ReadCSV;
 import tools.WriteCSV;
 import entities.LibraryItems;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.LocalDate;
+
 import entities.Loans;
+
 import java.util.ArrayList;
 
 
@@ -16,7 +21,7 @@ public class FileHandlingTest {
     // ReadCSV tests
 
     @Test
-    void testReadItemsCSV(){
+    void testReadItemsCSV() {
         ReadCSV readCSV = new ReadCSV();
         List<LibraryItems> items = readCSV.readItems("src/main/resources/ITEMS.csv");
         assertNotNull(items);
@@ -29,7 +34,7 @@ public class FileHandlingTest {
     }
 
     @Test
-    void testReadUsersCSV(){
+    void testReadUsersCSV() {
         ReadCSV readCSV = new ReadCSV();
         List<Users> users = readCSV.readUsers("src/main/resources/USERS.csv");
         assertNotNull(users);
@@ -42,7 +47,7 @@ public class FileHandlingTest {
     }
 
     @Test
-    void testReadLoans(){
+    void testReadLoans() {
         WriteCSV writeCSV = new WriteCSV();
         List<Loans> loansToWrite = new ArrayList<>();
         loansToWrite.add(new Loans("602130529", "Suzann Burgoin", "purus sit", "Book", LocalDate.now(), LocalDate.now().plusDays(30)));
@@ -65,7 +70,7 @@ public class FileHandlingTest {
     // WriteCSV tests
 
     @Test
-    void testWriteLoansCSV(){
+    void testWriteLoansCSV() {
         WriteCSV writeCSV = new WriteCSV();
         // Create a list of loans and add a loan to it to test
         List<Loans> loansToWrite = new ArrayList<>();
@@ -79,7 +84,7 @@ public class FileHandlingTest {
         List<Loans> loansRead = readCSV.readLoans("src/test/WritingLoansTest.csv");
 
         // loop through bot of the lists and compare if they match
-        for (int i = 0; i < loansToWrite.size(); i++){
+        for (int i = 0; i < loansToWrite.size(); i++) {
             assertEquals(loansToWrite.get(i).getBarcode(), loansRead.get(i).getBarcode());
             assertEquals(loansToWrite.get(i).getUserID(), loansRead.get(i).getUserID());
             assertEquals(loansToWrite.get(i).getTitle(), loansRead.get(i).getTitle());

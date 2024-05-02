@@ -1,4 +1,5 @@
 package entities;
+
 import java.time.LocalDate;
 
 //This class describes structure for a loan object in the library
@@ -14,7 +15,7 @@ public class Loans {
     private boolean isRenewable;
     private LocalDate dateReturned;
 
-    public Loans(String barcode, String userID, String title, String mediaType, LocalDate loanDate, LocalDate dueDate){
+    public Loans(String barcode, String userID, String title, String mediaType, LocalDate loanDate, LocalDate dueDate) {
         this.barcode = barcode;
         this.userID = userID;
         this.title = title;
@@ -23,57 +24,57 @@ public class Loans {
         this.dueDate = dueDate;
         this.numberOfRenews = 0;
         this.isRenewable = true;
-        this.dateReturned= null;
+        this.dateReturned = null;
     }
 
     // Getters
-    public String getUserID(){
+    public String getUserID() {
         return this.userID;
     }
 
-    public String getBarcode(){
+    public String getBarcode() {
         return this.barcode;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return this.title;
     }
 
-    public String getMediaType(){
+    public String getMediaType() {
         return this.mediaType;
     }
 
-    public LocalDate getLoanDate(){
+    public LocalDate getLoanDate() {
         return this.loanDate;
     }
 
-    public LocalDate getDueDate(){
+    public LocalDate getDueDate() {
         return this.dueDate;
     }
 
-    public int getNumberOfRenews(){
+    public int getNumberOfRenews() {
         return this.numberOfRenews;
     }
 
-    public void setIsRenewable(boolean isRenewable){
+    public void setIsRenewable(boolean isRenewable) {
         this.isRenewable = isRenewable;
     }
 
-    public LocalDate getDateReturned(){
+    public LocalDate getDateReturned() {
         return this.dateReturned;
     }
 
-    public void setDateReturned(LocalDate dateReturned){
+    public void setDateReturned(LocalDate dateReturned) {
         this.dateReturned = dateReturned;
     }
 
-     public void incrementNumberOfRenews(){
+    public void incrementNumberOfRenews() {
         this.numberOfRenews++;
     }
 
 
     // setter for dueDate can be used for extending loan period
-    public void setDueDate(LocalDate dueDate){
+    public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 }
